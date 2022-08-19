@@ -6,11 +6,11 @@ from mypage.models import *
 # 댓글
 class CommentSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField(method_name='getusername')
-    userimage = serializers.ImageField(source = 'writer.profile.image')
+    #userimage = serializers.ImageField(source = 'writer.profile.image')
 
     class Meta:
         model = Comment
-        fields = ['id', 'post', 'writer', 'username','userimage', 'content', 'created_at', 'updated_at']
+        fields = ['id', 'post', 'writer', 'username', 'content', 'created_at', 'updated_at']
 
     def getusername(self, obj):
         comment = obj
