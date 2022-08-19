@@ -214,7 +214,7 @@ def subfollowing_post_list(request):
         mypostData = list(myPost.data)
         for data in mypostData:
             postList.append(data)
-        fillmeposts = Post.objects.filter(writer = user)
+        fillmeposts = Post.objects.filter(writer = fillme)
         fillmepost = AllPostSerializer(fillmeposts, many=True)
         fillmedata = list(fillmepost.data)
         for data in fillmedata:
