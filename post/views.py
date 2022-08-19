@@ -195,6 +195,7 @@ def user_persona_post_list(request, user_id, persona_id):
 @api_view(['GET'])
 @permission_classes([IsAuthenticatedOrReadOnly])
 def subfollowing_post_list(request):
+    fillme = User.objects.get(username = "fillmeofficial")
     user = request.user # 로그인한 유저(= 나) 정보 불러 오기
     subfollowings = user.profile.subfollowings.all() # 내가 팔로우한 유저들 불러 오기
     # persona = get_object_or_404(Persona, pk = persona_id)    
@@ -212,6 +213,11 @@ def subfollowing_post_list(request):
         myPost = AllPostSerializer(myposts, many=True)
         mypostData = list(myPost.data)
         for data in mypostData:
+            postList.append(data)
+        fillmeposts = Post.objects.filter(writer = user)
+        fillmepost = AllPostSerializer(fillmeposts, many=True)
+        fillmedata = list(fillmepost.data)
+        for data in fillmedata:
             postList.append(data)
         serializer = sorted(postList, key = lambda k: k.get('created_at',0), reverse = True)
         return Response(serializer)
