@@ -9,7 +9,7 @@ from notice.serializers import *
 from accounts.models import *
 from mypage.models import *
 from .models import Post, Comment
-from .serializers import CommentSerializer, AllPostSerializer, PostSerializer, VideoSerializer, LikeSerializer, PostLikeSerializer
+from .serializers import *
 
 # Create your views here.
 
@@ -226,14 +226,12 @@ def post_comment_list(request, post_id):
     post = Post.objects.get(pk = post_id)
 
     if request.method == 'GET':
-        request.data['writer'] = user.id
-        request.data['post'] = post.id
         comments = Comment.objects.filter(post = post_id)
         serializer = CommentSerializer(comments, many = True)
         return Response(serializer.data)
 
     if request.method == 'POST':
-        serializer = CommentSerializer(data = {
+        serializer = CommentcreateSerializer(data = {
             "writer" : user.id,
             "post": post.id,
             "content":request.data["content"]
